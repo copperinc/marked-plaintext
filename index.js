@@ -59,7 +59,16 @@ Renderer.prototype.image = function(href, title, text) {
   return this.showImageText ? text : '';
 }
 Renderer.prototype.text = function(text) {
-  return text;
+  return text.replace(/&(?:amp|lt|gt|quot|#39);/g, function (match) {
+    switch (match) {
+      case '&amp;': return '&';
+      case '&lt;': return '<';
+      case '&gt;': return '>';
+      case '&quot;': return '"';
+      case '&#39;': return "'";
+    }
+    return match;
+  });
 }
 
 module.exports = Renderer;
